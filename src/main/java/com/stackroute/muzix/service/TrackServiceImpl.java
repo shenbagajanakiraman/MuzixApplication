@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
 public class TrackServiceImpl implements TrackService {
 
-
-
-
+    private Track myTrack;
     private TrackReopsitory trackReopsitory;
 
 
@@ -41,19 +40,24 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public void deleteTrack(int id) {
+        myTrack = trackReopsitory.getOne(id);
 
-        trackReopsitory.deleteById(id);
+        if(trackReopsitory.existsById(myTrack.getTrackId())) {
+
+            trackReopsitory.deleteById(id);
+        }
     }
 
     @Override
     public void updateTrack(Track track, int id) {
 
+//        track.setTrackId(id);
 
+        myTrack = trackReopsitory.getOne(id);
 
+        track.setTrackId(myTrack.getTrackId());
 
-        track.setTrackId(id);
-
-//        trackReopsitory.getOne(id);
+        track.setTrackName(myTrack.getTrackName());
 
         trackReopsitory.save(track);
 
