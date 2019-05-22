@@ -18,13 +18,8 @@ public class TrackController {
 
     @Autowired
     private TrackService musicService;
-//
-//    @Autowired
-//    public  TrackController (MuzixService musicService) {
-//
-//        this.musicService = musicService;
-//
-//    }
+
+
 
     //Handler Methods
 
@@ -33,7 +28,24 @@ public class TrackController {
         ResponseEntity responseEntity;
         try {
             musicService.saveTrack(track);
-            responseEntity = new ResponseEntity<String>("Successfullyu created", HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<String>("Successfully created", HttpStatus.CREATED);
+        } catch (Exception e) {
+            responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+        return responseEntity;
+    }
+
+
+    @PutMapping("/track/{id}")
+    public ResponseEntity<String> updateTrack (@RequestBody Track track,@PathVariable int id) {
+        ResponseEntity responseEntity;
+        try {
+
+
+            musicService.updateTrack(track,id);
+
+
+            responseEntity = new ResponseEntity<Track>(track, HttpStatus.CREATED);
         } catch (Exception e) {
             responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
         }
@@ -46,14 +58,17 @@ public class TrackController {
     public ResponseEntity<String> addTrack (@RequestBody Track track,@PathVariable int id) {
         ResponseEntity responseEntity;
         try {
-            musicService.saveTrack(track);
             track.setTrackId(id);
-            responseEntity = new ResponseEntity<String>("Successfullyu created", HttpStatus.CREATED);
+            musicService.saveTrack(track);
+
+            responseEntity = new ResponseEntity<Track>(track, HttpStatus.CREATED);
         } catch (Exception e) {
             responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
         }
         return responseEntity;
     }
+
+
 
     @GetMapping("/tracks")
 

@@ -11,7 +11,12 @@ import java.util.List;
 
 public class TrackServiceImpl implements TrackService {
 
+
+
+
     private TrackReopsitory trackReopsitory;
+
+
 
     @Autowired
 
@@ -38,5 +43,22 @@ public class TrackServiceImpl implements TrackService {
     public void deleteTrack(int id) {
 
         trackReopsitory.deleteById(id);
+    }
+
+    @Override
+    public void updateTrack(Track track, int id) {
+
+
+
+
+        track.setTrackId(id);
+
+//        trackReopsitory.getOne(id);
+
+        trackReopsitory.save(track);
+
+
+
+
     }
 }

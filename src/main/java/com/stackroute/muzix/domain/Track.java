@@ -14,6 +14,9 @@ import javax.persistence.Id;
 @Entity
 // Lombok annotations
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Track {
 
   @Id
